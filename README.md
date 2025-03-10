@@ -1,7 +1,5 @@
 # 100days-gpu-challenge
 
-Bro in CUDA 📗 : https://github.com/a-hamdi/cuda
-
 ### Mandatory and Optional Tasks
 | Day   | Task Description                                                                                     |
 |-------|-----------------------------------------------------------------------------------------------------|
