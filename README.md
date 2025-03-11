@@ -14,4 +14,5 @@
 |-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | day1  | **vector_add_cuda.cpp/cu**: Implemented vector addition with cuda kernel.<br>**vector_add.py**: Implemented same logic with triton and compared the kernels.                                                                 |
 | day2  | **fused_softmax.py**: Implemented fused softmax with triton,based on the Triton101 youtube.                                                                 |
-| day3 (TODO)  | **fused_softmax.cpp/cu**: I'm going to write a cuda kernel that runs the same way as triton_fused_softmax                               |
+| day3 | **fused_softmax.cpp/cu**: wrote a cuda kernel that runs the same way as triton_fused_softmax                               |
+| day4 (TODO) | **fused_softmax_analysis**: got help from GPT since it was too difficult to understand. I need to study it further so I'm planning to write an analysis                               |
