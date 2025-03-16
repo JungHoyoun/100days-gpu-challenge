@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 3.20)
 cmake_policy(SET CMP0146 NEW)  # Suppress the FindCUDA policy warning
 
-project(day5 LANGUAGES CXX CUDA)  # Include CUDA in the project
-
+project(day6 LANGUAGES C CXX CUDA)  # Include CUDA in the project
+# set(CMAKE_CUDA_COMPILER /usr/local/cuda/bin/nvcc)
+# set(CMAKE_CUDA_STANDARD 11)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_CUDA_FLAGS ${CMAKE_CUDA_FLAGS} "-g -G")  # enable cuda-gdb
+endif()
 if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
     set(CMAKE_CUDA_ARCHITECTURES 86)
 endif()
@@ -12,7 +16,7 @@ file(GLOB gpu_source_files "${CMAKE_SOURCE_DIR}/src/*.cu")
 file(GLOB header_files "${CMAKE_SOURCE_DIR}/src/*.cuh")
 
 # Set the URL for the PyTorch library
-set(LIBTORCH_URL "https://download.pytorch.org/libtorch/cu121/libtorch-cxx11-abi-shared-with-deps-2.2.1%2Bcu121.zip")
+# set(LIBTORCH_URL "https://download.pytorch.org/libtorch/cu121/libtorch-cxx11-abi-shared-with-deps-2.2.1%2Bcu121.zip")
 
 # Set the download directory and target directory for libtorch
 # set(LIBTORCH_ZIP "${CMAKE_SOURCE_DIR}/third-party/libtorch.zip")
@@ -24,9 +28,9 @@ set(LIBTORCH_DIR "${CMAKE_SOURCE_DIR}/third-party/libtorch")
 # endif()
 
 # Unzip the library if not already unzipped
-if(NOT EXISTS ${LIBTORCH_DIR})
-    execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${LIBTORCH_ZIP} --strip-components=1 -C ${LIBTORCH_DIR})
-endif()
+# if(NOT EXISTS ${LIBTORCH_DIR})
+#     execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${LIBTORCH_ZIP} --strip-components=1 -C ${LIBTORCH_DIR})
+# endif()
 
 # Add the extracted libtorch to the CMake prefix path
 list(APPEND CMAKE_PREFIX_PATH ${LIBTORCH_DIR})
@@ -46,5 +50,6 @@ find_package(Torch REQUIRED)
 # Set compilation flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
-add_executable(days5 "${CMAKE_SOURCE_DIR}/src/segment_sum_main.cc" ${gpu_source_files})
-target_link_libraries(days5 "${TORCH_LIBRARIES}")
+add_executable(day6 "${CMAKE_SOURCE_DIR}/src/segment_sum_main.cc" ${gpu_source_files})
+
+target_link_libraries(day6 "${TORCH_LIBRARIES}")
