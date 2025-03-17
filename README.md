@@ -20,4 +20,5 @@
 | day6 | **segment_sum.cpp/cu**: Debugged the segment_sum. I found debugging CUDA programming much more difficult than debugging CPU programming. I'm going to look for an easier way to debug CUDA kernels  |
 | day7 | **matrix_transpose.cu**: Learned how to debug a cuda kernel using the Nsight extension and solved the matrix transpose problem on LeetGPU   |
 | day8 | **rmsnorm.cu**: Applied the segment_sum technique to implement RMSnorm (1)    |
-| day9(TODO) | **rmsnorm.cu**: Applied the segment_sum technique to implement RMSnorm (2)    |
+| day9 | **rmsnorm.cu**: Implemented the RMSnorm by separating reduction and normalization (2)    |
+| day10 (TODO)| **rmsnorm.cu**: Implementing RMSnorm and debugging axis (3)  
