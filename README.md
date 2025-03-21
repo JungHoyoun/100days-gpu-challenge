@@ -23,3 +23,5 @@
 | day9 | **rmsnorm.cu**: Implemented the RMSnorm by separating reduction and normalization (2)    |
 | day10| **rmsnorm.cu**: Implemented RMSNorm using 2D block with segment_sum and fixed bugs (3)  |
 | day11| **convolution_1d.cu**: Solved 1d convolution problem in LeetGPU |
+| day12| **onlinesoftmax.cu**: Attempted to implement online softmax; analyzed Nvidia’s implementation |
+| day13| **onlinesoftmax.cu**: Implemented the host function of online softmax |
