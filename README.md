@@ -25,3 +25,15 @@
 | day11| **convolution_1d.cu**: Solved 1d convolution problem in LeetGPU |
 | day12| **onlinesoftmax.cu**: Attempted to implement online softmax; analyzed Nvidia’s implementation |
 | day13| **onlinesoftmax.cu**: Implemented the host function of online softmax |
+| day14| **README.md**: Studied about scan algorithm by gpumode lecture |
+
+<!-- 
+day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
+
+1. nsa 구현
+2. expert parallel 구현
+3. cutile도 맛보고싶고
+4. triton puzzle
+5. fp8 training
+6. 무슨 그 cuda 문서 매일 읽기
+ -->
