@@ -1,0 +1,1 @@
+void launch_flashattn(float* xq, float* xk, float* xv, float* masks);
