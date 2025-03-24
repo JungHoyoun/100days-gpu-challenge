@@ -27,6 +27,7 @@
 | day13| **onlinesoftmax.cu**: Implemented the host function of online softmax |
 | day14| **README.md**: Studied about scan algorithm by gpumode lecture |
 | day15| **custom_flash.cu**: Started Implementing Flash Attention (1)|
+| day16| **custom_flash.cu**: Implemented a single block of Flash Attention forward with python (2)|
 
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
