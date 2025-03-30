@@ -28,6 +28,9 @@
 | day14| **README.md**: Studied about scan algorithm by gpumode lecture |
 | day15| **custom_flash.cu**: Started Implementing Flash Attention (1)|
 | day16| **custom_flash.cu**: Implemented a single block of Flash Attention forward with python (2)|
+| day17| **custom_flash.cu**: Implemented a Flash Attention cuda kernel (3)|
+| day18| **custom_flash.cu**: Implemented a Flash Attention cuda kernel (4)|
+| day19| **custom_flash.cu/.cuh/cc/main.py**: Implemented a python library with custom flash attn (5)|
 
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
