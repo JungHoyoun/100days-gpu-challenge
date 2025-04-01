@@ -32,6 +32,7 @@
 | day18| **custom_flash.cu**: Implemented a Flash Attention cuda kernel (4)|
 | day19| **custom_flash.cu/.cuh/cc/main.py**: Implemented a python library with custom flash attn (5)|
 | day20| **matmul.py**: Implemented matmul using Triton. Decided to learn Triton first to get familiar with parallel programming|
+| day21| **dropout.py**: Reviewed matmul.py, watched the Triton lecture, and then implemented dropout.py|
 
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
