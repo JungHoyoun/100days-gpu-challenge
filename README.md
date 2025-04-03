@@ -34,6 +34,7 @@
 | day20| **matmul.py**: Implemented matmul using Triton. Decided to learn Triton first to get familiar with parallel programming|
 | day21| **dropout.py**: Reviewed matmul.py, watched the Triton lecture, and then implemented dropout.py|
 | day22| **layernorm.py**: Watched the Triton lecture, and then implemented layernorm.py (1)|
+| day23| **layernorm.py**: Watched the Triton lecture, and then implemented layernorm forward (2)|
 
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
