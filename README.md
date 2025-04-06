@@ -36,8 +36,8 @@
 | day22| **layernorm.py**: Watched the Triton lecture, and then implemented layernorm.py (1)|
 | day23| **layernorm.py**: Watched the Triton lecture, and then implemented layernorm forward (2)|
 | day24| **layernorm.py**: Watched the Triton lecture, and then implemented layernorm backward (3)|
-| day25| **transpose.py**: Implemented transpose using Triton |
-<!-- | day26| **transpose.py**: swiglu  | -->
+| day25| **transpose.py**: Implemented the transpose using Triton |
+| day26| **swiglu.py**: Implemented the swiglu forward using Triton |
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
 
@@ -47,4 +47,7 @@ day15: flashattn은 repository로 만들자 forward, backward 되는거 확인�
 4. triton puzzle
 5. fp8 training
 6. 무슨 그 cuda 문서 매일 읽기
+
+
+day 27에는 backward 구현, 왜 ligerkernel에서는 grid를 저렇게 했는지, ligerkernel과 속도 및 메모리 비교, swiglu fuse해서 좋은게뭔지, compile이랑 비교, 혹시되면 cuda python으로 작성
  -->
