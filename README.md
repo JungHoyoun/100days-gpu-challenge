@@ -38,6 +38,7 @@
 | day24| **layernorm.py**: Watched the Triton lecture, and then implemented layernorm backward (3)|
 | day25| **transpose.py**: Implemented the transpose using Triton |
 | day26| **swiglu.py**: Implemented the swiglu forward using Triton |
+| day27| **swiglu.py**: Implemented the swiglu backward using Triton (1)|
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
 
