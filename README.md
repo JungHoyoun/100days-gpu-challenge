@@ -39,6 +39,8 @@
 | day25| **transpose.py**: Implemented the transpose using Triton |
 | day26| **swiglu.py**: Implemented the swiglu forward using Triton |
 | day27| **swiglu.py**: Implemented the swiglu backward using Triton (1)|
+| day28| **swiglu.py**: Implemented the swiglu backward using Triton (2)|
+<!-- | day29| **swiglu.py**: Implemented the swiglu backward using Triton (2)| -->
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
 
@@ -50,5 +52,5 @@ day15: flashattn은 repository로 만들자 forward, backward 되는거 확인�
 6. 무슨 그 cuda 문서 매일 읽기
 
 
-day 27에는 backward 구현, 왜 ligerkernel에서는 grid를 저렇게 했는지, ligerkernel과 속도 및 메모리 비교, swiglu fuse해서 좋은게뭔지, compile이랑 비교, 혹시되면 cuda python으로 작성
+day 30에는 backward 구현, 왜 ligerkernel에서는 grid를 저렇게 했는지, ligerkernel과 속도 및 메모리 비교, swiglu fuse해서 좋은게뭔지, compile이랑 비교, 혹시되면 cuda python으로 작성
  -->
