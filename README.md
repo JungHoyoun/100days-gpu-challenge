@@ -40,7 +40,8 @@
 | day26| **swiglu.py**: Implemented the swiglu forward using Triton |
 | day27| **swiglu.py**: Implemented the swiglu backward using Triton (1)|
 | day28| **swiglu.py**: Implemented the swiglu backward using Triton (2)|
-| day29| **rope.py**: Implemented the rope using Triton (1)|
+| day29| **rope.py**: Implemented the rope forward using Triton (1)|
+| day30| **rope.py**: Implemented the rope forward using Triton (2)|
 <!-- | day29| **swiglu.py**: Implemented the swiglu backward using Triton (2)| -->
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
@@ -52,6 +53,7 @@ day15: flashattn은 repository로 만들자 forward, backward 되는거 확인�
 5. fp8 training
 6. 무슨 그 cuda 문서 매일 읽기
 day 29 rope
-
 (토요일) 벤치마크, 왜 ligerkernel에서는 grid를 저렇게 했는지, ligerkernel과 속도 및 메모리 비교, 그거 nsight? 그걸로 보기, 이론상 좋은 세팅 계산해서 최적인지 확인해보기, swiglu fuse해서 좋은게뭔지, compile이랑 비교, 혹시되면 cuda python으로 작성
+
+day 33~ flash attn 한번
  -->
