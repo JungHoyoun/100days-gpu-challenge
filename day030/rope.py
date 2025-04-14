@@ -33,43 +33,89 @@ def apply_rotary_emb(
     xk_out = torch.view_as_real(xk_ * freqs_cis).flatten(3)
     return xq_out.type_as(xq), xk_out.type_as(xk)
 
+@triton.jit
 def _rope_forward_kernel(
-    xq,
-    xk,
+    q_ptr,
+    q_row_stride,
+    k_ptr,
+    k_row_stride,
     cos,
+    cos_row_stride,
     sin,
-    output_xq,
-    output_xk,
-    H,
+    sin_row_stride,
+    sl,
+    bs: tl.constexpr,
+    cos_bs: tl.constexpr,
+    n_qh: tl.constexpr,
+    n_kh: tl.constexpr,
+    hd: tl.constexpr,
+    pad_n_qh: tl.constexpr,
+    pad_n_kh: tl.constexpr,
+    pad_hd: tl.constexpr,
     BLOCK_SIZE: tl.constexpr,
+    BACKWARD_PASS: tl.constexpr = False,
 ):
     PID = tl.program_id(0)
     # B, T, N, H
-    offsets = stride_n, tl.arange(0, H)
-
+    offsets_n = tl.arange(0, BLOCK_SIZE)
+    offsets_h = tl.arange(0, BLOCK_SIZE)
+    # offsets = offsets_n[:,None] * offsets_h[None,:]
+    # masks = offsets_n * 
 
     pass
 
 def rope(xq, xk):
     B, T, N, H = xq.shape
     theta = torch.outer(torch.arange(T), torch.arange(0, H, 2) / H)
-    cos = torch.cos(theta)
-    sin = torch.sin(theta)
+    cos = torch.cos(theta)[:, None]
+    sin = torch.sin(theta)[:, None]
     
     output_xq = torch.empty_like(xq, device=xq.device, dtype=xq.dtype)
     output_xk = torch.empty_like(xk, device=xq.device, dtype=xq.dtype)
     grid = (B * N, )
     BLOCK_SIZE = 32
 
+
+
+    batch_size, seq_len, n_q_head, head_dim = xq.shape
+    n_kv_head = xk.shape[2]
+    pad_hd = triton.next_power_of_2(head_dim)
+    pad_n_q_head = triton.next_power_of_2(n_q_head)
+    pad_n_kv_head = triton.next_power_of_2(n_kv_head)
+    BLOCK_SIZE = max(pad_n_q_head, pad_n_kv_head)
+    cos_batch_size = cos.shape[0]
+
+    # _rope_forward_kernel[grid](
+    #     xq,
+    #     xk,
+    #     cos,
+    #     sin,
+    #     output_xq,
+    #     output_xk,
+    #     BLOCK_SIZE = BLOCK_SIZE
+    # )
     _rope_forward_kernel[grid](
         xq,
+        xq.stride(1),
         xk,
+        xk.stride(1),
         cos,
+        cos.stride(-2),
         sin,
-        output_xq,
-        output_xk
-        BLOCK_SIZE = BLOCK_SIZE
+        sin.stride(-2),
+        seq_len,
+        batch_size,
+        cos_batch_size,
+        n_q_head,
+        n_kv_head,
+        head_dim,
+        pad_n_q_head,
+        pad_n_kv_head,
+        pad_hd,
+        BLOCK_SIZE=BLOCK_SIZE,
+        BACKWARD_PASS=False,
     )
+    return q.transpose(1, 2), k.transpose(1, 2), cos, sin
 
 # step 1
 def test_rope_kernel(B, T, N, H):
