@@ -44,6 +44,7 @@
 | day30| **rope.py**: Implemented the rope forward using Triton (2)|
 | day31| **rope.py**: Implemented the rope forward using Triton (3)|
 | day32| **flashattn.**: Implemented the flashattn forward using Triton (1)|
+| day33| **flashattn.**: Implemented the flashattn forward using Triton (2)|
 <!-- | day29| **swiglu.py**: Implemented the swiglu backward using Triton (2)| -->
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
