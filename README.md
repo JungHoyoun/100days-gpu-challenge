@@ -46,6 +46,7 @@
 | day32| **flashattn.**: Implemented the flashattn forward using Triton (1)|
 | day33| **flashattn.**: Implemented the flashattn forward using Triton (2)|
 | day34| **flashattn.**: Implemented the flashattn forward using Triton (3)|
+| day35| **flashattn.**: Implemented the flashattn forward using Triton (4)|
 <!-- | day29| **swiglu.py**: Implemented the swiglu backward using Triton (2)| -->
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
@@ -60,4 +61,6 @@ day 29 rope
 (토요일) 벤치마크, 왜 ligerkernel에서는 grid를 저렇게 했는지, ligerkernel과 속도 및 메모리 비교, 그거 nsight? 그걸로 보기, 이론상 좋은 세팅 계산해서 최적인지 확인해보기, swiglu fuse해서 좋은게뭔지, compile이랑 비교, 혹시되면 cuda python으로 작성
 
 day 33~ flash attn 한번
+
+하반기: flash mla backward 구현할 수 있을 정도
  -->
