@@ -10,7 +10,7 @@ DEVICE = f"cuda:{torch.cuda.current_device()}"
 def _attn_fwd_inner(
     Q, O, L, M,
     K_ptr, V_ptr, 
-    K_T_offsets, V_T_offsets,
+    K_T_offsets, V_offsets,
     block_index_QO,
     scale,
     T,
@@ -28,14 +28,14 @@ def _attn_fwd_inner(
         lo, hi = 0, block_index_QO * BLOCK_SIZE_QO
 
     K_T_offsets += lo * stride_K_T # 이건 왜 
-    V_T_offsets += lo * stride_V_T
+    V_offsets += lo * stride_V_T
     offsets_KV_T += lo
 
     for start_KV in range(lo, hi, BLOCK_SIZE_KV):
         start_KV = tl.multiple_of(start_KV, BLOCK_SIZE_KV)
 
         mask_KV_T = offsets_KV_T < T
-        K_T = tl.load(K_ptr + K_T_offsets, mask = mask_KV_T[None, :], others=0.) # (H, BLOCK_SIZE_KV)
+        K_T = tl.load(K_ptr + K_T_offsets, mask = mask_KV_T[None, :], other=0.) # (H, BLOCK_SIZE_KV)
         S = tl.dot(Q, K_T) * scale
 
         if DIAGONAL:
@@ -44,7 +44,7 @@ def _attn_fwd_inner(
             S = tl.where(causal_mask, S, -1.0e6) # shape (BLOCK_SIZE_QO, BLOCK_SIZE_KV)
         
         M_new = tl.maximum(M, tl.max(S, axis=1)) # shape (BLOCK_SIZE_QO)
-        S -= M_new[:, None] # 이거 브로드캐스팅이 되나?
+        S -= M_new[:, None]
 
         P = tl.exp2(S)
         L_new = tl.sum(P, axis=1)
@@ -83,7 +83,7 @@ def attn_fwd(
     stride_K_B, stride_K_N, stride_K_T, stride_K_H,
     stride_V_B, stride_V_N, stride_V_T, stride_V_H,
     stride_O_B, stride_O_N, stride_O_T, stride_O_H,
-    stride_LSE1,stride_LSE2,stride_LSE3,
+    stride_LSE_B, stride_LSE_N, stride_LSE_H,
     B, N, T,
     H: tl.constexpr,
     BLOCK_SIZE_QO: tl.constexpr, 
@@ -101,31 +101,31 @@ def attn_fwd(
     O_ptr += index_B * stride_O_B + index_N * stride_O_N
 
     block_index_QO = tl.program_id(axis=0)
-    offsets_QO_T = block_index_QO * BLOCK_SIZE_QO + tl.arange(0, BLOCK_SIZE_QO) # block은 B, N개가 지금 줄 서있는데 thread는 그럼 T마다 진행?
+    offsets_QO_T = block_index_QO * BLOCK_SIZE_QO + tl.arange(0, BLOCK_SIZE_QO)
     offsets_KV_T = tl.arange(0, BLOCK_SIZE_KV)
     offsets_H = tl.arange(0, H)
     
-    Q_offsets = offsets_QO_T[:, None] * stride_Q_N + offsets_H[None, :] * stride_Q_H # (BLOCK_SIZE_QO, H)
+    Q_offsets = offsets_QO_T[:, None] * stride_Q_T + offsets_H[None, :] * stride_Q_H # (BLOCK_SIZE_QO, H)
     K_T_offsets = offsets_H[:, None] * stride_K_H + offsets_KV_T[None, :] * stride_K_T # (H, BLOCK_SIZE_KV)
     V_offsets = offsets_KV_T[:, None] * stride_V_N + offsets_H[None, :] * stride_V_H
 
     mask_QO_T = offsets_QO_T < T
     Q = tl.load(Q_ptr + Q_offsets, mask=mask_QO_T[:,None], other = 0.)
     
-    M = tl.full(shape=[BLOCK_SIZE_QO], value=1e-6, dtype=tl.float32)
+    M = tl.full(shape=[BLOCK_SIZE_QO], value=-1e6, dtype=tl.float32)
     L = tl.full(shape=[BLOCK_SIZE_QO], value=1.0, dtype=tl.float32)
     O = tl.zeros([BLOCK_SIZE_QO, H], dtype=tl.float32)
 
-    O, L, M = _attn_fwd_inner( #이거의 역할은 뭐야? 실질적으로 softmax까지 계산하는것??? 그럼 이 위의 역할은?
+    O, L, M = _attn_fwd_inner(
         Q, O, L, M,
         K_ptr, V_ptr, 
         K_T_offsets, V_offsets,
         block_index_QO,
-        scale,
+        scale, T,
         stride_K_T, stride_V_T,
         BLOCK_SIZE_QO, BLOCK_SIZE_KV,
         False,
-        offsets_QO_T, offsets_KV_T,        
+        offsets_QO_T, offsets_KV_T, H  
     )
 
     O, L, M = _attn_fwd_inner(
@@ -133,11 +133,11 @@ def attn_fwd(
         K_ptr, V_ptr, 
         K_T_offsets, V_offsets,
         block_index_QO,
-        scale,
+        scale, T,
         stride_K_T, stride_V_T,
         BLOCK_SIZE_QO, BLOCK_SIZE_KV,
         True,
-        offsets_QO_T, offsets_KV_T,        
+        offsets_QO_T, offsets_KV_T, H     
     )
 
     O = O / L[:, None]
@@ -145,11 +145,11 @@ def attn_fwd(
     LSE = M + tl.math.log2(L)
 
     LSE_offsets = index_BN * stride_LSE_H + offsets_QO_T
-    LSE_mask = block_index_QO * BLOCK_SIZE_QO + tl.arange(0, BLOCK_SIZE_QO) < N
+    LSE_mask = block_index_QO * BLOCK_SIZE_QO + tl.arange(0, BLOCK_SIZE_QO) < T
     tl.store(LSE_ptr + LSE_offsets, LSE, mask=LSE_mask)
 
     O_offsets = offsets_QO_T[:, None] * stride_Q_N + offsets_H[None, :] * stride_O_H
-    tl.store(O_ptr + O_offsets, O, mask=mask_QO_T[L, None])
+    tl.store(O_ptr + O_offsets, O, mask=mask_QO_T[:, None])
 
 class _flashattention(torch.autograd.Function):
 
@@ -182,6 +182,7 @@ class _flashattention(torch.autograd.Function):
         ctx.grid = grid
         ctx.B, ctx.N, ctx.T, ctx.H = B, N, T, H
 
+        return O
 
 flashattention = _flashattention.apply
 # step 1
@@ -192,12 +193,26 @@ def test_flashattn_kernel(B, T, N, H):
     xv = torch.randn(B, N, T, H, dtype=torch.float32, device=DEVICE, requires_grad=True)
     scale = 1 / math.sqrt(H)
 
-
     y_ref = torch.nn.functional.scaled_dot_product_attention(xq, xk, xv, is_causal=True)
     y_tri = flashattention(xq, xk, xv, scale)
     torch.testing.assert_close(y_tri, y_ref)
 
     print("Forward Pass")
+
+# def benchmark(M, N, provider):
+#     x = torch.randn(M, N, device=DEVICE, dtype=torch.float32)
+
+#     stream = getattr(torch, DEVICE.type).Stream()
+#     getattr(torch, DEVICE.type).set_stream(stream)
+
+#     if provider == 'torch':
+#         ms = triton.testing.do_bench(lambda: torch.softmax(x, axis=-1))
+#     if provider == 'triton':
+#         ms = triton.testing.do_bench(lambda: softmax_triton(x))
+#     if provider == 'torch_compile':
+#         ms = triton.testing.do_bench(lambda: softmax_torch_co mpile(x))
+#     gbps = lambda ms: 2 * x.numel() * x.element_size() * 1e-9 / (ms * 1e-3)
+#     return gbps(ms)
 
 
 if __name__ == "__main__":

@@ -47,6 +47,7 @@
 | day33| **flashattn.**: Implemented the flashattn forward using Triton (2)|
 | day34| **flashattn.**: Implemented the flashattn forward using Triton (3)|
 | day35| **flashattn.**: Implemented the flashattn forward using Triton (4)|
+| day36| **fp8_gemm**: Studied about the fp8 gemm and Implemented it using Triton (1)|
 <!-- | day29| **swiglu.py**: Implemented the swiglu backward using Triton (2)| -->
 <!-- 
 day15: flashattn은 repository로 만들자 forward, backward 되는거 확인하면서!
