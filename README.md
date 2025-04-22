@@ -48,7 +48,8 @@
 | day34| **flashattn.**: Implemented the flashattn forward using Triton (3)|
 | day35| **flashattn.**: Implemented the flashattn forward using Triton (4)|
 | day36| **fp8_gemm**: Studied the fp8 gemm and Implemented it using Triton (1)|
-| day36| **fp8_gemm**: Studied the fp8 gemm (2)|
+| day37| **fp8_gemm**: Studied the fp8 gemm (2)|
+| day38| **fp8_gemm**: Implemented the block scaled fp8 gemm using Triton (3)|
 <!--
 1. nsa 구현
 2. expert parallel 구현
