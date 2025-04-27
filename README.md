@@ -51,6 +51,7 @@
 | day37| **fp8_gemm**: Studied the fp8 gemm (2)|
 | day38| **fp8_gemm**: Implemented the block scaled fp8 gemm using Triton (3)|
 | day39| **fp8_gemm**: Tested the scaled splitK fp8 gemm and compared with block scaled one|
+| day40| **README.md**: Studied the quantization algorithm and grid|
 <!--
 1. nsa 구현
 2. expert parallel 구현
