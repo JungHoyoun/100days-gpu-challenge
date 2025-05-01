@@ -52,6 +52,7 @@
 | day38| **fp8_gemm**: Implemented the block scaled fp8 gemm using Triton (3)|
 | day39| **fp8_gemm**: Tested the scaled splitK fp8 gemm and compared with block scaled one|
 | day40| **README.md**: Studied the quantization algorithm and grid|
+| day41| **torch_compile_study**: Studied how torch.compile works when performing reductions. |
 <!--
 1. nsa 구현
 2. expert parallel 구현
