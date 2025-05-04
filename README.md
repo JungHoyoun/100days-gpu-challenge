@@ -55,6 +55,7 @@
 | day41| **torch_compile_study**: Studied how torch.compile works when performing reductions|
 | day42 | **README.md**: Studied L2 cache behavior by changing the program ID mapping|
 | day43 | **README.md**: Studied L2 cache behavior for fp8_gemm|
+| day44 | **fp8_gemm_per_tensor.py**: Implemented per-tensor fp8 gemm using Triton|
 <!--
 1. nsa 구현
 2. expert parallel 구현
