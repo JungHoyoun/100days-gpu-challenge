@@ -56,17 +56,14 @@
 | day42 | **README.md**: Studied L2 cache behavior by changing the program ID mapping|
 | day43 | **README.md**: Studied L2 cache behavior for fp8_gemm|
 | day44 | **fp8_gemm_per_tensor.py**: Implemented per-tensor fp8 gemm using Triton|
+| day45 | **fp8_gemm_per_token.py**: Implemented per-token fp8 gemm using Triton / Watched a video about triton internals |
+| day46 | **fp8_gemm_per_block.py**: Implemented per-block fp8 gemm using Triton (1) |
+<!-- day46 **fp8_gemm_per_block.py** with benchmarks and profiling -->
 <!--
 1. nsa 구현
 2. expert parallel 구현
 3. cutile도 맛보고싶고
 4. triton puzzle
 5. fp8 training
-6. 무슨 그 cuda 문서 매일 읽기
-day 29 rope
-(토요일) 벤치마크, 왜 ligerkernel에서는 grid를 저렇게 했는지, ligerkernel과 속도 및 메모리 비교, 그거 nsight? 그걸로 보기, 이론상 좋은 세팅 계산해서 최적인지 확인해보기, swiglu fuse해서 좋은게뭔지, compile이랑 비교, 혹시되면 cuda python으로 작성
-
-day 33~ flash attn 한번
-
 하반기: flash mla backward 구현할 수 있을 정도
  -->
