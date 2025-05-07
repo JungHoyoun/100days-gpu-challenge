@@ -58,6 +58,7 @@
 | day44 | **fp8_gemm_per_tensor.py**: Implemented per-tensor fp8 gemm using Triton|
 | day45 | **fp8_gemm_per_token.py**: Implemented per-token fp8 gemm using Triton / Watched a video about triton internals |
 | day46 | **fp8_gemm_per_block.py**: Implemented per-block fp8 gemm using Triton (1) |
+| day47 | **triton_blockwise_gemm.py**: Studied Triton per-block fp8 gemm tutorial |
 <!-- day46 **fp8_gemm_per_block.py** with benchmarks and profiling -->
 <!--
 1. nsa 구현
