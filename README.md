@@ -60,7 +60,7 @@
 | day46 | **fp8_gemm_per_block.py**: Implemented per-block fp8 gemm using Triton (1) |
 | day47 | **triton_blockwise_gemm.py**: Studied Triton per-block fp8 gemm tutorial |
 | day48 | **fp8_gemm_per_block.py**: Implemented per-block fp8 gemm using Triton (2) |
-<!-- day46 **fp8_gemm_per_block.py** with benchmarks and profiling -->
+| day49 | **fp8_gemm_per_block.py**: Implemented per-block fp8 gemm using Triton (3) |
 <!--
 1. nsa 구현
 2. expert parallel 구현
