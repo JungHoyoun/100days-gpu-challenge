@@ -65,6 +65,7 @@
 | day51 | **group_gemm.py**: Studied group_gemm in Triton tutorial (2) |
 | day52 | **reference.py**: Studied MoE architecture and prepared AMD MoE implementation |
 | day53 | **custom_kernel.py**: AMD MoE implementation (1) |
+| day54 | **custom_kernel.py**: AMD MoE implementation (2) |
 <!--
 1. nsa 구현
 2. expert parallel 구현
