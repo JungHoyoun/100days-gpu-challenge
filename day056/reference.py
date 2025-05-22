@@ -611,16 +611,44 @@ def trace_handler(prof):
 
 if __name__ == "__main__":
     data = generate_input(
-        dhidden=512,
-        dexpert=128,
+        dhidden=4096,
+        dexpert=2048,
         nroutedexperts=16,
         nsharedexperts=1,
         nexpertspertoken=3,
-        bs=2,
-        seqlen=256,
+        bs=16,
+        seqlen=2048,
         seed=42,
     )
     check_implementation = make_match_reference(ref_kernel, rtol=1e-2, atol=1e-2)
+
+    input_tensor, weights, config = data
+    num_experts = config["n_routed_experts"]
+    moe = MoE(config)
+
+    # Fill in the given weights of the model
+    moe.gating_network.W_g.weight = nn.Parameter(weights["router.weight"])
+
+    for i in range(num_experts):
+        gate_proj_weight = weights[f"experts.{i}.0.weight"]
+        up_proj_weight = weights[f"experts.{i}.1.weight"]
+        down_proj_weight = weights[f"experts.{i}.2.weight"]
+
+        # Transpose weights to match expected shape for nn.Linear
+        moe.experts[i].W_gate.weight = nn.Parameter(gate_proj_weight.t())
+        moe.experts[i].W_up.weight = nn.Parameter(up_proj_weight.t())
+        moe.experts[i].W_down.weight = nn.Parameter(down_proj_weight.t())
+
+    moe.shared_expert.W_gate.weight = nn.Parameter(
+        weights["shared_experts.0.weight"].t()
+    )
+    moe.shared_expert.W_up.weight = nn.Parameter(weights["shared_experts.1.weight"].t())
+    moe.shared_expert.W_down.weight = nn.Parameter(
+        weights["shared_experts.2.weight"].t()
+    )
+
+    # Run the model
+    
 
     with torch.profiler.profile(
         activities=[
@@ -637,5 +665,5 @@ if __name__ == "__main__":
         # used when outputting for tensorboard
     ):
 
-        output = custom_kernel(data)
-        print(check_implementation(data, output))
+        output = moe(input_tensor)
+        # print(check_implementation(data, output))
