@@ -71,7 +71,8 @@
 | day57 | **README.md**: Watched Lecture 44: NVIDIA Profiling |
 | day58 | **matmul.cu/colorInversion.cu**: solve the problems in leetGPU using Cuda |
 | day59 | **reverse_array.cu/relu.cu/leacky_relu.cu**: solve the problems in leetGPU using Cuda |
-| day60 | **reverse_array.cu/relu.cu/leacky_relu.cu**: solve the problems in leetGPU using Cuda |
+| day60 | **matrix_copy.cu/rainbow_table.cu**: solve the problems in leetGPU using Cuda |
+| day61 | **reduction.cu**: solve the problems in leetGPU using Cuda |
 <!--
 1. nsa 구현
 2. expert parallel 구현
