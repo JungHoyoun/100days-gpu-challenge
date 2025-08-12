@@ -73,6 +73,7 @@
 | day59 | **reverse_array.cu/relu.cu/leacky_relu.cu**: solve the problems in leetGPU using Cuda |
 | day60 | **matrix_copy.cu/rainbow_table.cu**: solve the problems in leetGPU using Cuda |
 | day61 | **reduction.cu**: solve the problems in leetGPU using Cuda |
+| day62 | **softmax.cu**: solve the problems in leetGPU using Cuda and vscode nsight extension |
 <!--
 1. nsa 구현
 2. expert parallel 구현

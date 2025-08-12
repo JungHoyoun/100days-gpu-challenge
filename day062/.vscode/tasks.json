@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Nsight",
+			"command": "nvcc",
+			"args": [
+				"-g", // c++ 디버그
+				"-G", // cuda 디버그
+				"-O0", // 최적화수준 0
+				"-o=softmax", // output 이름
+				"./softmax1.cu"
+			],
+			"problemMatcher": ["$gcc"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
