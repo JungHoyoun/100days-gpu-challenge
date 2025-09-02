@@ -1,0 +1,119 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Nsight",
+			"command": "nvcc",
+			"args": [
+				"-g", // c++ 디버그
+				"-G", // cuda 디버그
+				"-O0", // 최적화수준 0
+				"-o=softmax", // output 이름
+				"./softmax4.cu"
+			],
+			"problemMatcher": ["$gcc"],
+			"group": { 	
+				"kind": "build",
+				"isDefault": false
+			}
+		},
+		{
+		"label": "sanitizer:memcheck",
+		"type": "shell",
+		"command": "compute-sanitizer",
+		"args": [
+			"--tool", "memcheck",
+			// "--target-processes", "all",
+			// "--leak-check", "full",
+			"--force-blocking-launches",
+			"--print-limit=1",
+			"${workspaceFolder}/softmax",   // 실행 파일
+			"input.txt", "ref.txt"          // 프로그램 인자
+		],
+		//compute-sanitizer --tool memcheck --target-processes all --leak-check full ./softmax
+		"group": "test",
+		"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"label": "util-debug",
+			"command": "g++",
+			"args": [
+				"-g", // c++ 디버그
+				"-O0", // 최적화수준 0
+				"-c", "./utils.cpp",
+				"-o", "./utils.o"
+			],
+			"problemMatcher": ["$gcc"],
+			"group": { 	
+				"kind": "build",
+				"isDefault": false
+			}
+		},
+		{
+			"type": "shell",
+			"label": "cuda-debug",
+			"command": "nvcc",
+			"args": [
+				"-g", // c++ 디버그
+				"-G", // cuda 디버그
+				"-O0", // 최적화수준 0
+				"-o=softmax", // output 이름
+				"./softmax4.cu",
+				"./utils.o"
+			],
+			"problemMatcher": ["$gcc"],
+			"group": { 	
+				"kind": "build", //순차실행 해야하면 굳이 없어도 되는 듯
+				"isDefault": false
+			}
+		},
+		{
+			"label": "build-all",
+			"group": {
+				"kind": "build",
+				"isDefault": true,
+			},
+			"dependsOn": ["util-debug", "cuda-debug"],
+			"dependsOrder": "sequence"
+		}
+	]
+}
+
+
+
+// {
+//   "version": "2.0.0",
+//   "tasks": [
+//     {
+//       "label": "build-utils-debug",
+//       "type": "shell",
+//       "command": "g++",
+//       "args": [
+//         "-g", "-O0", "-std=c++17",
+//         "-c", "utils.cpp",
+//         "-o", "utils.o"
+//       ],
+//       "group": "build",
+//       "problemMatcher": ["$gcc"]
+//     },
+//     {
+//       "label": "build-cuda-debug",
+//       "type": "shell",
+//       "command": "/usr/local/cuda/bin/nvcc",
+//       "args": [
+//         "-g", "-G", "-std=c++17", "-arch=sm_70",
+//         "softmax_cuda.cu", "utils.o",
+//         "-o", "softmax_cuda"
+//       ],
+//       "group": "build",
+//       "problemMatcher": ["$gcc"]
+//     },
+//     {
+//       "label": "build-all",
+//       "dependsOn": ["build-utils-debug", "build-cuda-debug"],
+//       "dependsOrder": "sequence"   // 순차 실행(필수: utils.o가 먼저 필요)
+//     }
+//   ]
+// }

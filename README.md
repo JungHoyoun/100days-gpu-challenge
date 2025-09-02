@@ -69,11 +69,12 @@
 | day55 | **custom_kernel.py**: AMD MoE implementation (3) |
 | day56 | **custom_kernel.py**: AMD MoE implementation (4) |
 | day57 | **README.md**: Watched Lecture 44: NVIDIA Profiling |
-| day58 | **matmul.cu/colorInversion.cu**: solve the problems in leetGPU using Cuda |
-| day59 | **reverse_array.cu/relu.cu/leacky_relu.cu**: solve the problems in leetGPU using Cuda |
-| day60 | **matrix_copy.cu/rainbow_table.cu**: solve the problems in leetGPU using Cuda |
-| day61 | **reduction.cu**: solve the problems in leetGPU using Cuda |
-| day62 | **softmax.cu**: solve the problems in leetGPU using Cuda and vscode nsight extension |
+| day58 | **matmul.cu/colorInversion.cu**: Solved the problems in leetGPU using Cuda |
+| day59 | **reverse_array.cu/relu.cu/leacky_relu.cu**: Solved the problems in leetGPU using Cuda |
+| day60 | **matrix_copy.cu/rainbow_table.cu**: Solved the problems in leetGPU using Cuda |
+| day61 | **reduction.cu**: Solved the problems in leetGPU using Cuda |
+| day62 | **softmax.cu**: Solved the problems in leetGPU using Cuda and vscode nsight extension |
+| day63 | **utils.cpp/hpp/softmax.cu**: Learned how to use Compute-Sanitizer and debug |
 <!--
 1. nsa 구현
 2. expert parallel 구현

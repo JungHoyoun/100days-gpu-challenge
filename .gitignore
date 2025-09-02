@@ -1,3 +1,4 @@
 */build/*
 */third-party/*
-.vscode
+*.o
+# .vscode
