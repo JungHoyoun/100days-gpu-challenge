@@ -1,0 +1,100 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "build-cuda",
+			"command": "nvcc",
+			"args": [
+				"-g", // c++ 디버그
+				"-G", // cuda 디버그
+				"-O0", // 최적화수준 0
+				"-o=dot_product", // output 이름
+				"./dot_product.cu"
+			],
+			"problemMatcher": ["$gcc"],
+			"group": { 	
+				"kind": "build",
+				"isDefault": false
+			}
+		},
+		{
+			"type": "shell",
+			"label": "run",
+			"command": "${workspaceFolder}/dot_product",
+			"group": { 	
+				"kind": "test",
+				"isDefault": false
+			}
+		},
+		{
+			"label": "build-and-test",
+			"group": {
+				"kind": "build",
+				"isDefault": true,
+			},
+			"dependsOn": ["build-cuda", "run"],
+			"dependsOrder": "sequence"
+		}
+		// {
+		// "label": "sanitizer:memcheck",
+		// "type": "shell",
+		// "command": "compute-sanitizer",
+		// "args": [
+		// 	"--tool", "memcheck",
+		// 	// "--target-processes", "all",
+		// 	// "--leak-check", "full",
+		// 	"--force-blocking-launches",
+		// 	"--print-limit=1",
+		// 	"${workspaceFolder}/softmax",   // 실행 파일
+		// 	"input.txt", "ref.txt"          // 프로그램 인자
+		// ],
+		// //compute-sanitizer --tool memcheck --target-processes all --leak-check full ./softmax
+		// "group": "test",
+		// "problemMatcher": []
+		// },
+		// {
+		// 	"type": "shell",
+		// 	"label": "util-debug",
+		// 	"command": "g++",
+		// 	"args": [
+		// 		"-g", // c++ 디버그
+		// 		"-O0", // 최적화수준 0
+		// 		"-c", "./utils.cpp",
+		// 		"-o", "./utils.o"
+		// 	],
+		// 	"problemMatcher": ["$gcc"],
+		// 	"group": { 	
+		// 		"kind": "build",
+		// 		"isDefault": false
+		// 	}
+		// },
+		// {
+		// 	"type": "shell",
+		// 	"label": "cuda-debug",
+		// 	"command": "nvcc",
+		// 	"args": [
+		// 		"-g", // c++ 디버그
+		// 		"-G", // cuda 디버그
+		// 		"-O0", // 최적화수준 0
+		// 		"-o=softmax", // output 이름
+		// 		"./softmax4.cu",
+		// 		"./utils.o"
+		// 	],
+		// 	"problemMatcher": ["$gcc"],
+		// 	"group": { 	
+		// 		"kind": "build", //순차실행 해야하면 굳이 없어도 되는 듯
+		// 		"isDefault": false
+		// 	}
+		// },
+		// {
+		// 	"label": "build-all",
+		// 	"group": {
+		// 		"kind": "build",
+		// 		"isDefault": true,
+		// 	},
+		// 	"dependsOn": ["util-debug", "cuda-debug"],
+		// 	"dependsOrder": "sequence"
+		// }
+	]
+}
