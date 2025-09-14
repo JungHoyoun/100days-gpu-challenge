@@ -76,6 +76,7 @@
 | day62 | **softmax.cu**: Solved the problems in leetGPU using Cuda and vscode nsight extension |
 | day63 | **utils.cpp/hpp/softmax.cu**: Learned how to use Compute-Sanitizer and debug |
 | day64 | **dot_product.cu**: Solved the dot product problem in leetGPU using Cuda |
+| day65 | **sgemm.cu**: Studied GEMM kernels by reading Sibohem's blog |
 <!--
 1. nsa 구현
 2. expert parallel 구현

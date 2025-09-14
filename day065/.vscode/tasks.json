@@ -1,0 +1,42 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "build-main",
+			"command": "nvcc",
+			"args": [
+				"-g", // c++ 디버그
+				"-G", // cuda 디버그
+				"-O0", // 최적화수준 0
+				"-o=sgemm", // output 이름
+				"./sgemm.cu",
+				"-lcublas"
+			],
+			"problemMatcher": ["$gcc"],
+			"group": { 	
+				"kind": "build",
+				"isDefault": false
+			}
+		},
+		{
+			"type": "shell",
+			"label": "run",
+			"command": "${workspaceFolder}/sgemm",
+			"args": ["1"],
+			"group": { 	
+				"kind": "test",
+				"isDefault": false
+			}
+		},
+		{
+			"label": "build-and-test",
+			"group": {
+				"kind": "build",
+				"isDefault": true,
+			},
+			"dependsOn": ["build-main", "run"],
+			"dependsOrder": "sequence"
+		}
+	]
+}
